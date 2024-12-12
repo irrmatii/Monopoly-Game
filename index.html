@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=3.0">
+    <title>Monopoly Game</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="player_container">
+        <div class="player_name">
+            <h1>Player 1</h1>
+            <p>Money: <span class="money"></span>$</p>
+        </div>
+        <div class="player_cards"></div>
+        <div class="player_action">
+            <div class="buyStreet">
+                <button class="buy_street">Buy Street</button>
+            </div>
+            <div class="houses">
+                <div class="house_container">
+                    <div class="house"></div>
+                    <div>
+                        <button class="buy_house">Buy house 50$</button>
+                    </div>
+                </div>
+
+                <div class="house_container">
+                    <div class="hotel"></div>
+                    <div>
+                        <button class="buy_hotel">Buy hotel 50$</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game_container">
+        <div class="player_1">
+            <img class="img" src="https://images.vexels.com/media/users/3/261955/isolated/preview/e2fbfe4d7d597629331c076cae77f30e-boardgame-pawn-game-icon.png" alt="">
+        </div>
+        <div class="player_2">
+            <img class="img" src="https://images.squarespace-cdn.com/content/v1/61c92a7bedd3673ad5700fc9/0b1ca294-f27b-439a-b50a-b70fbb6643ec/Black+Elegant+Fashion+Store+Font+Logo-5.png" alt="">
+        </div>
+
+        <div class="street_container start">
+            <div class="description">
+                <h4>START</h4>
+            </div>
+            <div class="street_info">
+                <div class="street_name">
+                    <div class="player_2"></div>
+                    <img class="go_image" src="https://monopolylorton.com/go.png" alt="">
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>Take 1000$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_1">
+            <div class="color green"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Tallinn</h3>
+                    <div class="board_house">
+                    </div>
+                </div>
+                <div class="street_price">
+                    <p>200$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_2">
+            <div class="color green"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Riga</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>210$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_3">
+            <div class="color green"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Vilnius</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>220$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_4">
+            <div class="description_2">
+                <h4>FREE PARKING</h4>
+            </div>
+            <div class="street_info">
+                <div class="street_name">
+                    <img class="go_image" src="https://cdn0.iconfinder.com/data/icons/cosmo-transport/40/sign_car-512.png" alt="">
+                    <div class="board_house"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_6">
+            <div class="color orange"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Lisbon</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>250$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_8">
+            <div class="color orange"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Madrid</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>260$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_10">
+            <div class="color orange"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Valletta</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>270$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_15">
+            <div class="description">
+                <h4> PARK </h4>
+            </div>
+            <div class="street_info">
+                <div class="street_name">
+                    <img class="go_image" src="https://www.iconpacks.net/icons/2/free-tree-icon-1578-thumb.png" alt="">
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>Take 700$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_14">
+            <div class="color yellow"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Paris</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>300$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_13">
+            <div class="color yellow"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Roma</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>310$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_12">
+            <div class="color yellow"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Amsterdam</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>320$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_11">
+            <div class="description">
+                <h4>JAIL</h4>
+            </div>
+            <div class="street_info">
+                <div class="street_name">
+                    <img class="go_image" src="https://cdn-icons-png.flaticon.com/512/5600/5600529.png" alt="">
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>Pay 300$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_9">
+            <div class="color blue"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Helsinki</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>350$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_7">
+            <div class="color blue"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Copenhagen</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>360$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="street_container grid_5">
+            <div class="color blue"></div>
+            <div class="street_info">
+                <div class="street_name">
+                    <h3>Oslo</h3>
+                    <div class="board_house"></div>
+                </div>
+                <div class="street_price">
+                    <p>370$</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="monopoly_img">
+            <div class="board_section">
+                <div>
+                    <h2>Player <span class="players">1</span> turn</h2>
+                </div>
+                <div class="alert">
+                    <div class="message">
+                        <p>Move: <span class="move"></span></p>
+                        <p class="action_info"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="board_section">
+                <img class="monopoly_logo" src="https://logos-world.net/wp-content/uploads/2023/03/Monopoly-Logo-2008.png" alt="">
+            </div>
+            <div class="board_section">
+                <div class="dice_container">
+                    <div class="dice_box"></div>
+                    <div class="dice_box">
+                        <div class="dice"></div>
+                    </div>
+                    <div class="dice_box"></div>
+                </div>
+                <div class="roll_container">
+                    <button class="rollBtn display_block">Roll</button>
+                    <button class="rollBtn display_none">Roll</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="player_container">
+        <div class="player_name">
+            <h1>Player 2</h1>
+            <p>Money: <span class="money"></span>$</p>
+        </div>
+        <div class="player_cards"></div>
+        <div class="player_action">
+            <div class="buyStreet">
+                <button class="buy_street">Buy Street</button>
+            </div>
+            <div class="houses">
+                <div class="house_container">
+                    <div class="house"></div>
+                    <div>
+                        <button class="buy_house">Buy house 50$</button>
+                    </div>
+                </div>
+
+                <div class="house_container">
+                    <div class="hotel"></div>
+                    <div>
+                        <button class="buy_hotel">Buy hotel 50$</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
