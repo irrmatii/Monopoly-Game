@@ -183,7 +183,6 @@ const cardsInfo = [
     },
 ];
 const boardPosition = ["1/ 1/ 2/ 2", "1/ 2/ 2/ 3", "1/ 3/ 2/ 4", "1/ 4/ 2/ 5", "1/ 5/ 2/ 6", "2/ 5/ 3/ 6", "3/ 5/ 4/ 6", "4/ 5/ 5/ 6", "5/ 5/ 6/ 6", "5/ 4/ 6/ 5", "5/ 3/ 6/ 4", "5/ 2/ 6/ 3", "5/ 1/ 6/ 2", "4/ 1/ 5/ 2", "3/ 1/ 4/ 2", "2/ 1/ 3/ 2"];
-const housePrice = 50;
 let canBuyStreet_1 = true;
 let canBuyStreet_2 = true;
 let canBuyHouse_1 = true;
@@ -200,6 +199,7 @@ money[0].innerHTML = `${player_1Money}`;
 money[1].innerHTML = `${player_2Money}`;
 function action_Player1() {
     cardsInfo.forEach((card) => {
+        var _a, _b, _c, _d, _e;
         // START function
         if (player_1Index === 0 && player_1Index === card.id) {
             actionInfo.innerHTML = ``;
@@ -207,51 +207,112 @@ function action_Player1() {
             player_1Money += 1000;
             money[0].innerHTML = `${player_1Money}`;
         }
+        if (player_1Index > boardPosition.length) {
+            actionInfo.innerHTML = ``;
+            actionInfo.innerHTML = `${card.description}`;
+            player_1Money += 1000;
+            money[0].innerHTML = `${player_1Money}`;
+        }
         // FREE PARKING function
-        else if (player_1Index === 4 && player_1Index === card.id) {
+        if (player_1Index === 4 && player_1Index === card.id) {
             actionInfo.innerHTML = ``;
             actionInfo.innerHTML = `${card.description}`;
         }
         // PARK function
-        else if (player_1Index === 8 && player_1Index === card.id) {
+        if (player_1Index === 8 && player_1Index === card.id) {
             actionInfo.innerHTML = ``;
             actionInfo.innerHTML = `${card.description}`;
             player_1Money += 700;
             money[0].innerHTML = `${player_1Money}`;
         }
         // JAIL function
-        else if (player_1Index === 12 && player_1Index === card.id) {
+        if (player_1Index === 12 && player_1Index === card.id) {
             actionInfo.innerHTML = ``;
             actionInfo.innerHTML = `${card.description}`;
             player_1Money -= 200;
             money[0].innerHTML = `${player_1Money}`;
         }
-        // Checks streets
-        // @ts-ignore
-        else if (card.type === "property" && player_1Index === card.id) {
-            console.log(card.id);
-            console.log(player_1Index);
-            // preventing from buying the same street
+        // Streets and rent function
+        if (card.type === "property" && player_1Index === card.id) {
+            // ==== Pay rent ====
             // @ts-ignore
-            if (player_1Streets.includes(card.name)) {
-                canBuyStreet_1 = false;
-            }
-            else {
-                canBuyStreet_1 = true;
-            }
-            // Buy a street
-            // @ts-ignore
-            if (canBuyStreet_1 && player_1Money >= card.price) {
-                actionInfo.innerHTML = ``;
-                actionInfo.innerHTML = `You can buy a street`;
-            }
-            buyStreet[0].onclick = () => {
-                if (canBuyStreet_1) {
-                    player_1Streets.push(card.name);
+            if (player_2Streets.includes(card.name)) {
+                // house rent
+                if (!((_a = card.house) === null || _a === void 0 ? void 0 : _a.length)) {
                     // @ts-ignore
-                    player_1Money -= card.price;
+                    player_1Money -= card.rent[0];
                     money[0].innerHTML = `${player_1Money}`;
-                    playerCards[0].innerHTML += `
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[0]}$ for rent`;
+                }
+                else if (((_b = card.house) === null || _b === void 0 ? void 0 : _b.length) === 1) {
+                    // @ts-ignore
+                    player_1Money -= card.rent[1];
+                    money[0].innerHTML = `${player_1Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[1]}$ for house rent`;
+                }
+                else if (((_c = card.house) === null || _c === void 0 ? void 0 : _c.length) === 2) {
+                    // @ts-ignore
+                    player_1Money -= card.rent[2];
+                    money[0].innerHTML = `${player_1Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[2]}$ for house rent`;
+                }
+                else if (((_d = card.house) === null || _d === void 0 ? void 0 : _d.length) === 3) {
+                    // @ts-ignore
+                    player_1Money -= card.rent[3];
+                    money[0].innerHTML = `${player_1Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[3]}$ for house rent`;
+                }
+                else if (((_e = card.house) === null || _e === void 0 ? void 0 : _e.length) === 4) {
+                    // @ts-ignore
+                    player_1Money -= card.rent[4];
+                    money[0].innerHTML = `${player_1Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[4]}$ for house rent`;
+                }
+                // hotel rent
+                // @ts-ignore
+                if (card.hotel.length >= 1) {
+                    // @ts-ignore
+                    player_1Money -= card.rent[5] * card.hotel.length;
+                    money[0].innerHTML = `${player_1Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[5] * card.hotel.length}$ for hotel rent`;
+                }
+            }
+            // ==== Buy streets / houses / hotels ====
+            // @ts-ignore
+            else if (card.type === "property" && player_1Index === card.id && !player_2Streets.includes(card.name)) {
+                // preventing from buying the same street
+                // @ts-ignore
+                if (player_1Streets.includes(card.name)) {
+                    canBuyStreet_1 = false;
+                }
+                else {
+                    canBuyStreet_1 = true;
+                }
+                // Buy a street
+                // @ts-ignore
+                if (canBuyStreet_1 && player_1Money >= card.price) {
+                    actionInfo.innerHTML = ``;
+                    actionInfo.innerHTML = `You can buy a street`;
+                }
+                buyStreet[0].onclick = () => {
+                    if (canBuyStreet_1) {
+                        player_1Streets.push(card.name);
+                        // @ts-ignore
+                        player_1Money -= card.price;
+                        money[0].innerHTML = `${player_1Money}`;
+                        playerCards[0].innerHTML += `
                   <div class="street_container">
                   <div class="color ${card.color}"></div>
                   <div class="street_info">
@@ -264,68 +325,264 @@ function action_Player1() {
                   </div>
                   </div>
                   </div>`;
-                    canBuyStreet_1 = false;
-                }
-                else {
-                    return;
-                }
-            };
-            // Buy a house
-            // @ts-ignore
-            if (player_1Streets.includes(card.name) && !canBuyStreet_1 && player_1Money >= card.houseCost) {
+                        canBuyStreet_1 = false;
+                    }
+                    else {
+                        return;
+                    }
+                };
+                // Buy a house
                 // @ts-ignore
-                if (card.house.length < 4) {
-                    actionInfo.innerHTML = ``;
-                    actionInfo.innerHTML = `You can buy a house`;
-                    buyHouse[0].onclick = () => {
-                        // preventing from buying the house twice
-                        if (player_1Index === card.id && canBuyHouse_1) {
+                if (player_1Streets.includes(card.name) && !canBuyStreet_1 && player_1Money >= card.houseCost) {
+                    // @ts-ignore
+                    if (card.house.length < 4) {
+                        actionInfo.innerHTML = ``;
+                        actionInfo.innerHTML = `You can buy a house`;
+                        buyHouse[0].onclick = () => {
+                            // preventing from buying the house twice
+                            if (player_1Index === card.id && canBuyHouse_1) {
+                                // @ts-ignore
+                                player_1Money -= card.houseCost;
+                                money[0].innerHTML = `${player_1Money}`;
+                                boardHouse[card.id].innerHTML += `<div class="smallHouse"></div>`;
+                                // @ts-ignore
+                                card.house.push(1);
+                                canBuyHouse_1 = false;
+                            }
+                            else {
+                                return;
+                            }
+                        };
+                    }
+                    // Buy a hotel
+                    else {
+                        actionInfo.innerHTML = ``;
+                        actionInfo.innerHTML = `You can buy a hotel`;
+                        buyHotel[0].onclick = () => {
                             // @ts-ignore
-                            player_1Money -= card.houseCost;
-                            money[0].innerHTML = `${player_1Money}`;
-                            boardHouse[card.id].innerHTML += `<div class="smallHouse"></div>`;
-                            // @ts-ignore
-                            card.house.push(1);
-                            canBuyHouse_1 = false;
-                        }
-                        else {
-                            return;
-                        }
-                    };
+                            if (player_1Index === card.id && canBuyHotel_1 && card.house.includes(2)) {
+                                // @ts-ignore
+                                player_1Money -= card.hotelCost;
+                                money[0].innerHTML = `${player_1Money}`;
+                                boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
+                                canBuyHotel_1 = false;
+                                // @ts-ignore
+                                card.house.push(2);
+                            }
+                            else if (player_1Index === card.id && canBuyHotel_1) {
+                                // @ts-ignore
+                                player_1Money -= card.hotelCost;
+                                money[0].innerHTML = `${player_1Money}`;
+                                boardHouse[card.id].innerHTML = ``;
+                                boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
+                                canBuyHotel_1 = false;
+                                // @ts-ignore
+                                card.house.push(2);
+                            }
+                        };
+                    }
                 }
-                // Buy a hotel
-                else {
+                // ==== Not enough money ====
+                // @ts-ignore
+                if (player_1Money < card.price || player_1Money < card.houseCost || player_1Money < card.hotelCost) {
                     actionInfo.innerHTML = ``;
-                    actionInfo.innerHTML = `You can buy a hotel`;
-                    buyHotel[0].onclick = () => {
-                        // @ts-ignore
-                        if (player_1Index === card.id && canBuyHotel_1 && card.house.includes(2)) {
-                            // @ts-ignore
-                            player_1Money -= card.hotelCost;
-                            money[0].innerHTML = `${player_1Money}`;
-                            boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
-                            canBuyHotel_1 = false;
-                            // @ts-ignore
-                            card.house.push(2);
-                        }
-                        else if (player_1Index === card.id && canBuyHotel_1) {
-                            // @ts-ignore
-                            player_1Money -= card.hotelCost;
-                            money[0].innerHTML = `${player_1Money}`;
-                            boardHouse[card.id].innerHTML = ``;
-                            boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
-                            canBuyHotel_1 = false;
-                            // @ts-ignore
-                            card.house.push(2);
-                        }
-                    };
+                    actionInfo.innerHTML = `You don't have enough money`;
                 }
             }
-            // Not enough money
+        }
+    });
+}
+function action_Player2() {
+    cardsInfo.forEach((card) => {
+        var _a, _b, _c, _d, _e;
+        // START function
+        if (player_2Index === 0 && player_2Index === card.id) {
+            actionInfo.innerHTML = ``;
+            actionInfo.innerHTML = `${card.description}`;
+            player_2Money += 1000;
+            money[1].innerHTML = `${player_2Money}`;
+        }
+        if (player_2Index > boardPosition.length) {
+            actionInfo.innerHTML = ``;
+            actionInfo.innerHTML = `${card.description}`;
+            player_2Money += 1000;
+            money[1].innerHTML = `${player_2Money}`;
+        }
+        // FREE PARKING function
+        if (player_2Index === 4 && player_2Index === card.id) {
+            actionInfo.innerHTML = ``;
+            actionInfo.innerHTML = `${card.description}`;
+        }
+        // PARK function
+        if (player_2Index === 8 && player_2Index === card.id) {
+            actionInfo.innerHTML = ``;
+            actionInfo.innerHTML = `${card.description}`;
+            player_2Money += 700;
+            money[1].innerHTML = `${player_2Money}`;
+        }
+        // JAIL function
+        if (player_2Index === 12 && player_2Index === card.id) {
+            actionInfo.innerHTML = ``;
+            actionInfo.innerHTML = `${card.description}`;
+            player_2Money -= 200;
+            money[1].innerHTML = `${player_2Money}`;
+        }
+        // Streets and rent function
+        if (card.type === "property" && player_2Index === card.id) {
+            // ==== Pay rent ====
             // @ts-ignore
-            if (player_1Money < card.price || player_1Money < card.houseCost || player_1Money < card.hotelCost) {
-                actionInfo.innerHTML = ``;
-                actionInfo.innerHTML = `You don't have enough money`;
+            if (player_1Streets.includes(card.name)) {
+                // house rent
+                if (!((_a = card.house) === null || _a === void 0 ? void 0 : _a.length)) {
+                    // @ts-ignore
+                    player_2Money -= card.rent[0];
+                    money[1].innerHTML = `${player_2Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[0]}$ for rent `;
+                }
+                else if (((_b = card.house) === null || _b === void 0 ? void 0 : _b.length) === 1) {
+                    // @ts-ignore
+                    player_2Money -= card.rent[1];
+                    money[1].innerHTML = `${player_2Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[1]}$ for house rent`;
+                }
+                else if (((_c = card.house) === null || _c === void 0 ? void 0 : _c.length) === 2) {
+                    // @ts-ignore
+                    player_2Money -= card.rent[2];
+                    money[1].innerHTML = `${player_2Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[2]}$ for house rent`;
+                }
+                else if (((_d = card.house) === null || _d === void 0 ? void 0 : _d.length) === 3) {
+                    // @ts-ignore
+                    player_2Money -= card.rent[3];
+                    money[1].innerHTML = `${player_2Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[3]}$ for house rent`;
+                }
+                else if (((_e = card.house) === null || _e === void 0 ? void 0 : _e.length) === 4) {
+                    // @ts-ignore
+                    player_2Money -= card.rent[4];
+                    money[1].innerHTML = `${player_2Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[4]}$ for house rent`;
+                }
+                // hotel rent
+                // @ts-ignore
+                if (card.hotel.length >= 5) {
+                    // @ts-ignore
+                    player_2Money -= card.rent[5];
+                    money[1].innerHTML = `${player_2Money}`;
+                    actionInfo.innerHTML = ``;
+                    // @ts-ignore
+                    actionInfo.innerHTML = `You need to pay ${card.rent[5]}$ for hotel rent`;
+                }
+            }
+            // ==== Buy streets / houses / hotels ====
+            // @ts-ignore
+            else if (card.type === "property" && player_2Index === card.id && !player_1Streets.includes(card.name)) {
+                // preventing from buying the same street
+                // @ts-ignore
+                if (player_2Streets.includes(card.name)) {
+                    canBuyStreet_2 = false;
+                }
+                else {
+                    canBuyStreet_2 = true;
+                }
+                // Buy a street
+                // @ts-ignore
+                if (canBuyStreet_2 && player_2Money >= card.price) {
+                    actionInfo.innerHTML = ``;
+                    actionInfo.innerHTML = `You can buy a street`;
+                }
+                buyStreet[1].onclick = () => {
+                    if (canBuyStreet_2) {
+                        player_2Streets.push(card.name);
+                        // @ts-ignore
+                        player_2Money -= card.price;
+                        money[1].innerHTML = `${player_2Money}`;
+                        playerCards[1].innerHTML += `
+                  <div class="street_container">
+                  <div class="color ${card.color}"></div>
+                  <div class="street_info">
+                  <div class="street_name">
+                    <h3>${card.name}</h3>
+                    <div class="board_house"></div>
+                  </div>
+                  <div class="street_price">
+                    <p>${card.price}$</p>
+                  </div>
+                  </div>
+                  </div>`;
+                        canBuyStreet_2 = false;
+                    }
+                    else {
+                        return;
+                    }
+                };
+                // Buy a house
+                // @ts-ignore
+                if (player_2Streets.includes(card.name) && !canBuyStreet_2 && player_2Money >= card.houseCost) {
+                    // @ts-ignore
+                    if (card.house.length < 4) {
+                        actionInfo.innerHTML = ``;
+                        actionInfo.innerHTML = `You can buy a house`;
+                        buyHouse[1].onclick = () => {
+                            // preventing from buying the house twice
+                            if (player_2Index === card.id && canBuyHouse_2) {
+                                // @ts-ignore
+                                player_2Money -= card.houseCost;
+                                money[1].innerHTML = `${player_2Money}`;
+                                boardHouse[card.id].innerHTML += `<div class="smallHouse"></div>`;
+                                // @ts-ignore
+                                card.house.push(1);
+                                canBuyHouse_2 = false;
+                            }
+                            else {
+                                return;
+                            }
+                        };
+                    }
+                    // Buy a hotel
+                    else {
+                        actionInfo.innerHTML = ``;
+                        actionInfo.innerHTML = `You can buy a hotel`;
+                        buyHotel[1].onclick = () => {
+                            // @ts-ignore
+                            if (player_2Index === card.id && canBuyHotel_2 && card.house.includes(2)) {
+                                // @ts-ignore
+                                player_2Money -= card.hotelCost;
+                                money[1].innerHTML = `${player_2Money}`;
+                                boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
+                                canBuyHotel_2 = false;
+                                // @ts-ignore
+                                card.house.push(2);
+                            }
+                            else if (player_2Index === card.id && canBuyHotel_2) {
+                                // @ts-ignore
+                                player_2Money -= card.hotelCost;
+                                money[1].innerHTML = `${player_2Money}`;
+                                boardHouse[card.id].innerHTML = ``;
+                                boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
+                                canBuyHotel_2 = false;
+                                // @ts-ignore
+                                card.house.push(2);
+                            }
+                        };
+                    }
+                }
+                // ==== Not enough money ====
+                // @ts-ignore
+                if (player_2Money < card.price || player_2Money < card.houseCost || player_2Money < card.hotelCost) {
+                    actionInfo.innerHTML = ``;
+                    actionInfo.innerHTML = `You don't have enough money`;
+                }
             }
         }
     });
@@ -383,7 +640,10 @@ rollBtn[0].onclick = () => {
     player_1Index = player_1Index % boardPosition.length;
     player_1.style.gridArea = `${boardPosition[player_1Index]}`;
     action_Player1();
+    canBuyHouse_2 = true;
+    canBuyHotel_2 = true;
     console.log("player1");
+    console.log(player_2Streets);
 };
 rollBtn[1].onclick = () => {
     let randImage = Math.floor(Math.random() * diceImages.length);
@@ -427,8 +687,9 @@ rollBtn[1].onclick = () => {
     player_2Index += moveNum;
     player_2Index = player_2Index % boardPosition.length;
     player_2.style.gridArea = `${boardPosition[player_2Index]}`;
+    action_Player2();
     canBuyHouse_1 = true;
     canBuyHotel_1 = true;
+    console.log(player_1Streets);
     console.log("player2");
-    console.log(canBuyStreet_1);
 };
