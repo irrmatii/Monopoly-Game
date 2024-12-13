@@ -435,7 +435,7 @@ function action_Player1() {
                         }
                         else {
                             actionInfo.innerHTML = ``;
-                            actionInfo.innerHTML += `To buy a house, collect all houses with the same color`;
+                            actionInfo.innerHTML += `To buy a house, collect all streets with the same color`;
                         }
                     });
                 }
@@ -654,7 +654,7 @@ function action_Player2() {
                         }
                         else {
                             actionInfo.innerHTML = ``;
-                            actionInfo.innerHTML += `To buy a house, collect all houses with the same color`;
+                            actionInfo.innerHTML += `To buy a house, collect all streets with the same color`;
                         }
                     });
                 }
