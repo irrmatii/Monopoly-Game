@@ -429,10 +429,22 @@ h3{
     transition: 0.3s ease-in-out;
 }
 
+.startBtn{
+    max-width: 70px;
+    width: 100%;
+    height:20px;
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+    border: 2px solid black;
+    transition: 0.3s ease-in-out;
+}
+
 .rollBtn:hover ,
 .buy_house:hover,
 .buy_hotel:hover,
-.buy_street:hover{
+.buy_street:hover,
+.startBtn:hover{
     transform: scale(1.05);
     cursor: pointer;
 }

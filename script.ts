@@ -1,3 +1,4 @@
+const startBtn = document.querySelector('.startBtn') as HTMLButtonElement;
 const dice = document.querySelector('.dice') as HTMLDivElement;
 const rollBtn = document.querySelectorAll('.rollBtn') as NodeListOf<HTMLButtonElement>;
 const move = document.querySelector('.move') as HTMLSpanElement;
@@ -627,6 +628,17 @@ function action_Player2(){
 }
 
 
+
+// ===== START BUTTON =====
+
+startBtn.onclick = () => {
+    rollBtn[0].classList.remove('display_none')
+    rollBtn[0].classList.add('display_block')
+    startBtn.classList.remove('display_block')
+    startBtn.classList.add('display_none')
+
+    actionInfo.innerHTML += `Roll the dice`
+}
 
 
 // ===== DICE ROLL =====

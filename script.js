@@ -1,4 +1,5 @@
 "use strict";
+const startBtn = document.querySelector('.startBtn');
 const dice = document.querySelector('.dice');
 const rollBtn = document.querySelectorAll('.rollBtn');
 const move = document.querySelector('.move');
@@ -575,6 +576,14 @@ function action_Player2() {
         }
     });
 }
+// ===== START BUTTON =====
+startBtn.onclick = () => {
+    rollBtn[0].classList.remove('display_none');
+    rollBtn[0].classList.add('display_block');
+    startBtn.classList.remove('display_block');
+    startBtn.classList.add('display_none');
+    actionInfo.innerHTML += `Roll the dice`;
+};
 // ===== DICE ROLL =====
 let diceNum = 0;
 const diceImages = [
