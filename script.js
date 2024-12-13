@@ -25,6 +25,7 @@ const cardsInfo = [
         "name": "Tallinn",
         "type": "property",
         "color": "green",
+        "colorID": 0,
         "price": 200,
         "rent": [2, 10, 30, 90, 160, 250],
         "houseCost": 50,
@@ -37,6 +38,7 @@ const cardsInfo = [
         "name": "Riga",
         "type": "property",
         "color": "green",
+        "colorID": 0,
         "price": 210,
         "rent": [4, 20, 60, 180, 320, 450],
         "houseCost": 50,
@@ -49,6 +51,7 @@ const cardsInfo = [
         "name": "Vilnius",
         "type": "property",
         "color": "green",
+        "colorID": 0,
         "price": 220,
         "rent": [6, 30, 90, 270, 400, 550],
         "houseCost": 50,
@@ -67,6 +70,7 @@ const cardsInfo = [
         "name": "Lisbon",
         "type": "property",
         "color": "orange",
+        "colorID": 1,
         "price": 250,
         "rent": [10, 50, 90, 290, 420, 550],
         "houseCost": 50,
@@ -79,6 +83,7 @@ const cardsInfo = [
         "name": "Madrid",
         "type": "property",
         "color": "orange",
+        "colorID": 1,
         "price": 260,
         "rent": [10, 60, 100, 300, 420, 550],
         "houseCost": 50,
@@ -91,6 +96,7 @@ const cardsInfo = [
         "name": "Valletta",
         "type": "property",
         "color": "orange",
+        "colorID": 1,
         "price": 270,
         "rent": [10, 60, 100, 320, 440, 560],
         "houseCost": 50,
@@ -109,6 +115,7 @@ const cardsInfo = [
         "name": "Paris",
         "type": "property",
         "color": "yellow",
+        "colorID": 2,
         "price": 300,
         "rent": [15, 70, 160, 480, 650, 800],
         "houseCost": 50,
@@ -121,6 +128,7 @@ const cardsInfo = [
         "name": "Roma",
         "type": "property",
         "color": "yellow",
+        "colorID": 2,
         "price": 310,
         "rent": [15, 70, 160, 480, 650, 800],
         "houseCost": 50,
@@ -133,6 +141,7 @@ const cardsInfo = [
         "name": "Amsterdam",
         "type": "property",
         "color": "yellow",
+        "colorID": 2,
         "price": 320,
         "rent": [15, 75, 170, 490, 670, 820],
         "houseCost": 50,
@@ -151,6 +160,7 @@ const cardsInfo = [
         "name": "Helsinki",
         "type": "property",
         "color": "blue",
+        "colorID": 3,
         "price": 350,
         "rent": [20, 80, 200, 550, 750, 950],
         "houseCost": 50,
@@ -163,6 +173,7 @@ const cardsInfo = [
         "name": "Copenhagen",
         "type": "property",
         "color": "blue",
+        "colorID": 3,
         "price": 360,
         "rent": [20, 80, 220, 560, 770, 970],
         "houseCost": 50,
@@ -175,6 +186,7 @@ const cardsInfo = [
         "name": "Oslo",
         "type": "property",
         "color": "blue",
+        "colorID": 3,
         "price": 370,
         "rent": [25, 90, 220, 580, 800, 1000],
         "houseCost": 50,
@@ -196,8 +208,28 @@ let player_1Money = 5000;
 let player_2Money = 5000;
 let player_1Streets = [];
 let player_2Streets = [];
+let player_1StreetsColor = [];
+let player_2StreetsColor = [];
 money[0].innerHTML = `${player_1Money}`;
 money[1].innerHTML = `${player_2Money}`;
+// ===== START BUTTON =====
+startBtn.onclick = () => {
+    rollBtn[0].classList.remove('display_none');
+    rollBtn[0].classList.add('display_block');
+    startBtn.classList.remove('display_block');
+    startBtn.classList.add('display_none');
+    actionInfo.innerHTML += `Roll the dice`;
+};
+// ===== DICE ROLL =====
+let diceNum = 0;
+const diceImages = [
+    "https://static.thenounproject.com/png/1341914-200.png",
+    "https://static.thenounproject.com/png/1341916-200.png",
+    "https://static.thenounproject.com/png/1341919-200.png",
+    "https://static.thenounproject.com/png/1341913-200.png",
+    "https://static.thenounproject.com/png/1341918-200.png",
+    "https://static.thenounproject.com/png/1341915-200.png"
+];
 function action_Player1() {
     cardsInfo.forEach((card) => {
         var _a, _b, _c, _d, _e;
@@ -304,6 +336,23 @@ function action_Player1() {
                 buyStreet[0].onclick = () => {
                     if (canBuyStreet_1) {
                         player_1Streets.push(card.name);
+                        // tracking how many streets color player_1 has
+                        if (card.color === "green") {
+                            // @ts-ignore
+                            player_1StreetsColor.push(card.color);
+                        }
+                        else if (card.color === "orange") {
+                            // @ts-ignore
+                            player_1StreetsColor.push(card.color);
+                        }
+                        else if (card.color === "yellow") {
+                            // @ts-ignore
+                            player_1StreetsColor.push(card.color);
+                        }
+                        else if (card.color === "blue") {
+                            // @ts-ignore
+                            player_1StreetsColor.push(card.color);
+                        }
                         // @ts-ignore
                         player_1Money -= card.price;
                         money[0].innerHTML = `${player_1Money}`;
@@ -328,54 +377,67 @@ function action_Player1() {
                 };
                 // Buy a house
                 // @ts-ignore
-                if (player_1Streets.includes(card.name) && !canBuyStreet_1 && player_1Money >= card.houseCost) {
-                    // @ts-ignore
-                    if (card.house.length < 4) {
-                        actionInfo.innerHTML = ``;
-                        actionInfo.innerHTML += `You can buy a house`;
-                        buyHouse[0].onclick = () => {
-                            // preventing from buying the house twice
-                            if (player_1Index === card.id && canBuyHouse_1) {
+                if (!canBuyStreet_1 && player_1Money >= card.houseCost) {
+                    let checkColorLength = [];
+                    player_1StreetsColor.forEach((item) => {
+                        if (item === card.color) {
+                            checkColorLength.push(item);
+                            console.log(checkColorLength);
+                            console.log(player_1StreetsColor);
+                        }
+                        // @ts-ignore
+                        if (checkColorLength.length === 3 && card.house.length < 4) {
+                            actionInfo.innerHTML = ``;
+                            actionInfo.innerHTML += `You can buy a house`;
+                            buyHouse[0].onclick = () => {
+                                // preventing from buying the house twice
+                                if (player_1Index === card.id && canBuyHouse_1) {
+                                    // @ts-ignore
+                                    player_1Money -= card.houseCost;
+                                    money[0].innerHTML = `${player_1Money}`;
+                                    boardHouse[card.id].innerHTML += `<div class="smallHouse"></div>`;
+                                    // @ts-ignore
+                                    card.house.push(1);
+                                    canBuyHouse_1 = false;
+                                }
+                                else {
+                                    return;
+                                }
+                            };
+                        }
+                        // Buy a hotel
+                        // @ts-ignore
+                        else if (card.house.length === 4) {
+                            actionInfo.innerHTML = ``;
+                            actionInfo.innerHTML += `You can buy a hotel`;
+                            buyHotel[0].onclick = () => {
                                 // @ts-ignore
-                                player_1Money -= card.houseCost;
-                                money[0].innerHTML = `${player_1Money}`;
-                                boardHouse[card.id].innerHTML += `<div class="smallHouse"></div>`;
-                                // @ts-ignore
-                                card.house.push(1);
-                                canBuyHouse_1 = false;
-                            }
-                            else {
-                                return;
-                            }
-                        };
-                    }
-                    // Buy a hotel
-                    else {
-                        actionInfo.innerHTML = ``;
-                        actionInfo.innerHTML += `You can buy a hotel`;
-                        buyHotel[0].onclick = () => {
-                            // @ts-ignore
-                            if (player_1Index === card.id && canBuyHotel_1 && card.house.includes(2)) {
-                                // @ts-ignore
-                                player_1Money -= card.hotelCost;
-                                money[0].innerHTML = `${player_1Money}`;
-                                boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
-                                canBuyHotel_1 = false;
-                                // @ts-ignore
-                                card.house.push(2);
-                            }
-                            else if (player_1Index === card.id && canBuyHotel_1) {
-                                // @ts-ignore
-                                player_1Money -= card.hotelCost;
-                                money[0].innerHTML = `${player_1Money}`;
-                                boardHouse[card.id].innerHTML = ``;
-                                boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
-                                canBuyHotel_1 = false;
-                                // @ts-ignore
-                                card.house.push(2);
-                            }
-                        };
-                    }
+                                if (player_1Index === card.id && canBuyHotel_1 && card.house.includes(2)) {
+                                    // @ts-ignore
+                                    player_1Money -= card.hotelCost;
+                                    money[0].innerHTML = `${player_1Money}`;
+                                    boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
+                                    canBuyHotel_1 = false;
+                                    // @ts-ignore
+                                    card.house.push(2);
+                                }
+                                else if (player_1Index === card.id && canBuyHotel_1) {
+                                    // @ts-ignore
+                                    player_1Money -= card.hotelCost;
+                                    money[0].innerHTML = `${player_1Money}`;
+                                    boardHouse[card.id].innerHTML = ``;
+                                    boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
+                                    canBuyHotel_1 = false;
+                                    // @ts-ignore
+                                    card.house.push(2);
+                                }
+                            };
+                        }
+                        else {
+                            actionInfo.innerHTML = ``;
+                            actionInfo.innerHTML += `To buy a house, collect all houses with the same color`;
+                        }
+                    });
                 }
                 // ==== Not enough money ====
                 // @ts-ignore
@@ -493,6 +555,23 @@ function action_Player2() {
                 buyStreet[1].onclick = () => {
                     if (canBuyStreet_2) {
                         player_2Streets.push(card.name);
+                        // tracking how many streets color player_2 has
+                        if (card.color === "green") {
+                            // @ts-ignore
+                            player_2StreetsColor.push(card.color);
+                        }
+                        else if (card.color === "orange") {
+                            // @ts-ignore
+                            player_2StreetsColor.push(card.color);
+                        }
+                        else if (card.color === "yellow") {
+                            // @ts-ignore
+                            player_2StreetsColor.push(card.color);
+                        }
+                        else if (card.color === "blue") {
+                            // @ts-ignore
+                            player_2StreetsColor.push(card.color);
+                        }
                         // @ts-ignore
                         player_2Money -= card.price;
                         money[1].innerHTML = `${player_2Money}`;
@@ -517,83 +596,78 @@ function action_Player2() {
                 };
                 // Buy a house
                 // @ts-ignore
-                if (player_2Streets.includes(card.name) && !canBuyStreet_2 && player_2Money >= card.houseCost) {
-                    // @ts-ignore
-                    if (card.house.length < 4) {
-                        actionInfo.innerHTML = ``;
-                        actionInfo.innerHTML = `You can buy a house`;
-                        buyHouse[1].onclick = () => {
-                            // preventing from buying the house twice
-                            if (player_2Index === card.id && canBuyHouse_2) {
+                if (!canBuyStreet_2 && player_2Money >= card.houseCost) {
+                    let checkColorLength = [];
+                    player_2StreetsColor.forEach((item) => {
+                        if (item === card.color) {
+                            checkColorLength.push(item);
+                            console.log(checkColorLength);
+                            console.log(player_2StreetsColor);
+                        }
+                        // @ts-ignore
+                        if (checkColorLength.length === 3 && card.house.length < 4) {
+                            actionInfo.innerHTML = ``;
+                            actionInfo.innerHTML += `You can buy a house`;
+                            buyHouse[1].onclick = () => {
+                                // preventing from buying the house twice
+                                if (player_2Index === card.id && canBuyHouse_2) {
+                                    // @ts-ignore
+                                    player_2Money -= card.houseCost;
+                                    money[1].innerHTML = `${player_2Money}`;
+                                    boardHouse[card.id].innerHTML += `<div class="smallHouse"></div>`;
+                                    // @ts-ignore
+                                    card.house.push(1);
+                                    canBuyHouse_2 = false;
+                                }
+                                else {
+                                    return;
+                                }
+                            };
+                        }
+                        // Buy a hotel
+                        // @ts-ignore
+                        else if (card.house.length === 4) {
+                            actionInfo.innerHTML = ``;
+                            actionInfo.innerHTML += `You can buy a hotel`;
+                            buyHotel[1].onclick = () => {
                                 // @ts-ignore
-                                player_2Money -= card.houseCost;
-                                money[1].innerHTML = `${player_2Money}`;
-                                boardHouse[card.id].innerHTML += `<div class="smallHouse"></div>`;
-                                // @ts-ignore
-                                card.house.push(1);
-                                canBuyHouse_2 = false;
-                            }
-                            else {
-                                return;
-                            }
-                        };
-                    }
-                    // Buy a hotel
-                    else {
-                        actionInfo.innerHTML = ``;
-                        actionInfo.innerHTML = `You can buy a hotel`;
-                        buyHotel[1].onclick = () => {
-                            // @ts-ignore
-                            if (player_2Index === card.id && canBuyHotel_2 && card.house.includes(2)) {
-                                // @ts-ignore
-                                player_2Money -= card.hotelCost;
-                                money[1].innerHTML = `${player_2Money}`;
-                                boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
-                                canBuyHotel_2 = false;
-                                // @ts-ignore
-                                card.house.push(2);
-                            }
-                            else if (player_2Index === card.id && canBuyHotel_2) {
-                                // @ts-ignore
-                                player_2Money -= card.hotelCost;
-                                money[1].innerHTML = `${player_2Money}`;
-                                boardHouse[card.id].innerHTML = ``;
-                                boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
-                                canBuyHotel_2 = false;
-                                // @ts-ignore
-                                card.house.push(2);
-                            }
-                        };
-                    }
+                                if (player_2Index === card.id && canBuyHotel_2 && card.house.includes(2)) {
+                                    // @ts-ignore
+                                    player_2Money -= card.hotelCost;
+                                    money[1].innerHTML = `${player_2Money}`;
+                                    boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
+                                    canBuyHotel_2 = false;
+                                    // @ts-ignore
+                                    card.house.push(2);
+                                }
+                                else if (player_2Index === card.id && canBuyHotel_1) {
+                                    // @ts-ignore
+                                    player_2Money -= card.hotelCost;
+                                    money[1].innerHTML = `${player_2Money}`;
+                                    boardHouse[card.id].innerHTML = ``;
+                                    boardHouse[card.id].innerHTML += `<div class="smallHotel"></div>`;
+                                    canBuyHotel_2 = false;
+                                    // @ts-ignore
+                                    card.house.push(2);
+                                }
+                            };
+                        }
+                        else {
+                            actionInfo.innerHTML = ``;
+                            actionInfo.innerHTML += `To buy a house, collect all houses with the same color`;
+                        }
+                    });
                 }
                 // ==== Not enough money ====
                 // @ts-ignore
                 if (player_2Money < card.price || player_2Money < card.houseCost || player_2Money < card.hotelCost) {
                     actionInfo.innerHTML = ``;
-                    actionInfo.innerHTML = `You don't have enough money`;
+                    actionInfo.innerHTML += `You don't have enough money`;
                 }
             }
         }
     });
 }
-// ===== START BUTTON =====
-startBtn.onclick = () => {
-    rollBtn[0].classList.remove('display_none');
-    rollBtn[0].classList.add('display_block');
-    startBtn.classList.remove('display_block');
-    startBtn.classList.add('display_none');
-    actionInfo.innerHTML += `Roll the dice`;
-};
-// ===== DICE ROLL =====
-let diceNum = 0;
-const diceImages = [
-    "https://static.thenounproject.com/png/1341914-200.png",
-    "https://static.thenounproject.com/png/1341916-200.png",
-    "https://static.thenounproject.com/png/1341919-200.png",
-    "https://static.thenounproject.com/png/1341913-200.png",
-    "https://static.thenounproject.com/png/1341918-200.png",
-    "https://static.thenounproject.com/png/1341915-200.png"
-];
 // ===== Roll button for player_1 =====
 rollBtn[0].onclick = () => {
     let randImage = Math.floor(Math.random() * diceImages.length);
