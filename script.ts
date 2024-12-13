@@ -232,32 +232,26 @@ function action_Player1(){
         // START function
         if (player_1Index === 0 && player_1Index === card.id) {
             actionInfo.innerHTML = ``
-            actionInfo.innerHTML = `${card.description}`
-            player_1Money += 1000
-            money[0].innerHTML = `${player_1Money}`
-        }
-        if (player_1Index > boardPosition.length){
-            actionInfo.innerHTML = ``
-            actionInfo.innerHTML = `${card.description}`
+            actionInfo.innerHTML += `${card.description}`
             player_1Money += 1000
             money[0].innerHTML = `${player_1Money}`
         }
         // FREE PARKING function
         if (player_1Index === 4 && player_1Index === card.id) {
-            actionInfo.innerHTML = ``
+            actionInfo.innerHTML += ``
             actionInfo.innerHTML = `${card.description}`
         }
         // PARK function
         if (player_1Index === 8 && player_1Index === card.id){
             actionInfo.innerHTML = ``
-            actionInfo.innerHTML = `${card.description}`
+            actionInfo.innerHTML += `${card.description}`
             player_1Money += 700
             money[0].innerHTML = `${player_1Money}`
         }
         // JAIL function
         if (player_1Index === 12 && player_1Index === card.id){
             actionInfo.innerHTML = ``
-            actionInfo.innerHTML = `${card.description}`
+            actionInfo.innerHTML += `${card.description}`
             player_1Money -= 200
             money[0].innerHTML = `${player_1Money}`
         }
@@ -273,35 +267,35 @@ function action_Player1(){
                         money[0].innerHTML = `${player_1Money}`
                         actionInfo.innerHTML = ``
                         // @ts-ignore
-                        actionInfo.innerHTML = `You need to pay ${card.rent[0]}$ for rent`
+                        actionInfo.innerHTML += `You need to pay ${card.rent[0]}$ for rent`
                     } else if (card.house?.length === 1){
                         // @ts-ignore
                         player_1Money -= card.rent[1]
                         money[0].innerHTML = `${player_1Money}`
                         actionInfo.innerHTML = ``
                         // @ts-ignore
-                        actionInfo.innerHTML = `You need to pay ${card.rent[1]}$ for house rent`
+                        actionInfo.innerHTML += `You need to pay ${card.rent[1]}$ for house rent`
                     } else if (card.house?.length === 2){
                         // @ts-ignore
                         player_1Money -= card.rent[2]
                         money[0].innerHTML = `${player_1Money}`
                         actionInfo.innerHTML = ``
                         // @ts-ignore
-                        actionInfo.innerHTML = `You need to pay ${card.rent[2]}$ for house rent`
+                        actionInfo.innerHTML += `You need to pay ${card.rent[2]}$ for house rent`
                     }else if (card.house?.length === 3){
                         // @ts-ignore
                         player_1Money -= card.rent[3]
                         money[0].innerHTML = `${player_1Money}`
                         actionInfo.innerHTML = ``
                         // @ts-ignore
-                        actionInfo.innerHTML = `You need to pay ${card.rent[3]}$ for house rent`
+                        actionInfo.innerHTML += `You need to pay ${card.rent[3]}$ for house rent`
                     }else if (card.house?.length === 4){
                         // @ts-ignore
                         player_1Money -= card.rent[4]
                         money[0].innerHTML = `${player_1Money}`
                         actionInfo.innerHTML = ``
                         // @ts-ignore
-                        actionInfo.innerHTML = `You need to pay ${card.rent[4]}$ for house rent`
+                        actionInfo.innerHTML += `You need to pay ${card.rent[4]}$ for house rent`
                     }
 
                     // hotel rent
@@ -312,7 +306,7 @@ function action_Player1(){
                         money[0].innerHTML = `${player_1Money}`
                         actionInfo.innerHTML = ``
                         // @ts-ignore
-                        actionInfo.innerHTML = `You need to pay ${card.rent[5] * card.hotel.length}$ for hotel rent`
+                        actionInfo.innerHTML += `You need to pay ${card.rent[5] * card.hotel.length}$ for hotel rent`
                     }
                 }
 
@@ -331,7 +325,7 @@ function action_Player1(){
                     // @ts-ignore
                     if (canBuyStreet_1 && player_1Money >= card.price){
                         actionInfo.innerHTML = ``
-                        actionInfo.innerHTML = `You can buy a street`
+                        actionInfo.innerHTML += `You can buy a street`
                     }
 
                     buyStreet[0].onclick = () => {
@@ -368,7 +362,7 @@ function action_Player1(){
                         // @ts-ignore
                         if (card.house.length < 4){
                             actionInfo.innerHTML = ``
-                            actionInfo.innerHTML = `You can buy a house`
+                            actionInfo.innerHTML += `You can buy a house`
 
                             buyHouse[0].onclick = () => {
                                 // preventing from buying the house twice
@@ -390,7 +384,7 @@ function action_Player1(){
                         // Buy a hotel
                         else {
                             actionInfo.innerHTML = ``
-                            actionInfo.innerHTML = `You can buy a hotel`
+                            actionInfo.innerHTML += `You can buy a hotel`
                             buyHotel[0].onclick = () => {
                                 // @ts-ignore
                                 if(player_1Index === card.id && canBuyHotel_1 && card.house.includes(2)){
@@ -424,7 +418,7 @@ function action_Player1(){
                     // @ts-ignore
                     if (player_1Money < card.price || player_1Money < card.houseCost || player_1Money < card.hotelCost){
                         actionInfo.innerHTML = ``
-                        actionInfo.innerHTML = `You don't have enough money`
+                        actionInfo.innerHTML += `You don't have enough money`
                     }
                 }
         }
@@ -438,12 +432,6 @@ function action_Player2(){
     cardsInfo.forEach((card) => {
         // START function
         if (player_2Index === 0 && player_2Index === card.id) {
-            actionInfo.innerHTML = ``
-            actionInfo.innerHTML = `${card.description}`
-            player_2Money += 1000
-            money[1].innerHTML = `${player_2Money}`
-        }
-        if (player_2Index > boardPosition.length){
             actionInfo.innerHTML = ``
             actionInfo.innerHTML = `${card.description}`
             player_2Money += 1000
@@ -642,7 +630,7 @@ function action_Player2(){
 
 
 // ===== DICE ROLL =====
-let moveNum: number = 0
+let diceNum: number = 0
 
 const diceImages:string[] = [
     "https://static.thenounproject.com/png/1341914-200.png",
@@ -653,7 +641,7 @@ const diceImages:string[] = [
     "https://static.thenounproject.com/png/1341915-200.png"
 ];
 
-
+// ===== Roll button for player_1 =====
 rollBtn[0].onclick = () => {
     let randImage: number = Math.floor(Math.random() * diceImages.length);
     let diceBackground: string = diceImages[randImage];
@@ -662,23 +650,23 @@ rollBtn[0].onclick = () => {
     function diceNumber (){
 
         if (diceBackground === "https://static.thenounproject.com/png/1341914-200.png"){
-            moveNum = 1
-            move.innerHTML = `${moveNum}`
+            diceNum = 1
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341916-200.png"){
-            moveNum = 2
-            move.innerHTML = `${moveNum}`
+            diceNum = 2
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341919-200.png"){
-            moveNum = 3
-            move.innerHTML = `${moveNum}`
+            diceNum = 3
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341913-200.png"){
-            moveNum = 4
-            move.innerHTML = `${moveNum}`
+            diceNum = 4
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341918-200.png"){
-            moveNum = 5
-            move.innerHTML = `${moveNum}`
+            diceNum = 5
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341915-200.png"){
-            moveNum = 6
-            move.innerHTML = `${moveNum}`
+            diceNum = 6
+            move.innerHTML = `${diceNum}`
         }
     }
     diceNumber ()
@@ -693,10 +681,15 @@ rollBtn[0].onclick = () => {
     }
 
     // Player_1 move
-    player_1Index += moveNum
-    player_1Index = player_1Index % boardPosition.length;
+    player_1Index += diceNum
+    if (player_1Index >= boardPosition.length){
+        player_1Index = player_1Index % boardPosition.length;
+        player_1Money += 1000
+        money[0].innerHTML = `${player_1Money}`
+    }
     player_1.style.gridArea = `${boardPosition[player_1Index]}`
 
+    // Player_1 action function
     action_Player1()
 
     canBuyHouse_2 = true
@@ -707,6 +700,7 @@ rollBtn[0].onclick = () => {
 }
 
 
+// ===== Roll button for player_2 =====
 rollBtn[1].onclick = () => {
     let randImage: number = Math.floor(Math.random() * diceImages.length);
     let diceBackground: string = diceImages[randImage];
@@ -715,23 +709,23 @@ rollBtn[1].onclick = () => {
     function diceNumber (){
 
         if (diceBackground === "https://static.thenounproject.com/png/1341914-200.png"){
-            moveNum = 1
-            move.innerHTML = `${moveNum}`
+            diceNum = 1
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341916-200.png"){
-            moveNum = 2
-            move.innerHTML = `${moveNum}`
+            diceNum = 2
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341919-200.png"){
-            moveNum = 3
-            move.innerHTML = `${moveNum}`
+            diceNum = 3
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341913-200.png"){
-            moveNum = 4
-            move.innerHTML = `${moveNum}`
+            diceNum = 4
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341918-200.png"){
-            moveNum = 5
-            move.innerHTML = `${moveNum}`
+            diceNum = 5
+            move.innerHTML = `${diceNum}`
         } else if (diceBackground === "https://static.thenounproject.com/png/1341915-200.png"){
-            moveNum = 6
-            move.innerHTML = `${moveNum}`
+            diceNum = 6
+            move.innerHTML = `${diceNum}`
         }
     }
     diceNumber ()
@@ -746,17 +740,21 @@ rollBtn[1].onclick = () => {
     }
 
     // Player_2 move
-    player_2Index += moveNum
-    player_2Index = player_2Index % boardPosition.length;
+    player_2Index += diceNum
+    if (player_2Index >= boardPosition.length){
+        player_2Index = player_2Index % boardPosition.length;
+        player_2Money += 1000
+        money[1].innerHTML = `${player_2Money}`
+    }
     player_2.style.gridArea = `${boardPosition[player_2Index]}`
 
+    // Player_2 action function
     action_Player2()
 
     canBuyHouse_1 = true
     canBuyHotel_1 = true
 
     console.log(player_1Streets)
-
     console.log("player2")
 }
 
